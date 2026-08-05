@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomoca — Ethiopia's First Espresso, Since 1953</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C130D;
+    --ink-soft:#3D2317;
+    --parchment:#F4ECDD;
+    --milk:#FBF6EC;
+    --clay:#A64B2A;
+    --clay-deep:#7E3A20;
+    --brass:#C69A45;
+    --line: rgba(244,236,221,0.16);
+    --line-dark: rgba(28,19,13,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:500; letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--clay);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--clay);display:inline-block;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* layered rule motif — the coffee-pour divider */
+  .pour-rule{height:5px; width:100%; display:flex;}
+  .pour-rule span{flex:1;}
+  .pour-rule .s1{background:var(--clay-deep);}
+  .pour-rule .s2{background:var(--clay);}
+  .pour-rule .s3{background:var(--brass);}
+
+  /* ===== NAV ===== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:26px 0 0;
+    transition:padding .3s ease, background .3s ease;
+  }
+  header.scrolled{padding:14px 0; background:rgba(28,19,13,0.92); backdrop-filter:blur(8px);}
+  .navrow{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:1180px; margin:0 auto; padding:0 32px;
+  }
+  .wordmark{
+    font-family:'Fraunces', serif; font-weight:500; font-size:22px;
+    color:var(--milk); letter-spacing:0.01em; display:flex; flex-direction:column; line-height:1;
+  }
+  .wordmark small{
+    font-family:'IBM Plex Mono', monospace; font-weight:400; font-size:9.5px;
+    letter-spacing:0.2em; color:var(--brass); margin-top:5px;
+  }
+  nav ul{list-style:none; display:flex; gap:36px;}
+  nav a{
+    font-size:13px; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--milk); opacity:0.82; font-weight:500;
+    position:relative; padding-bottom:4px;
+  }
+  nav a::after{content:'';position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--brass); transition:width .25s ease;}
+  nav a:hover{opacity:1;}
+  nav a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--brass); color:var(--milk) !important; padding:10px 20px;
+    font-size:12px; letter-spacing:0.08em;
+  }
+  .nav-cta::after{display:none;}
+  .nav-cta:hover{background:var(--brass); color:var(--ink) !important;}
+  .navlinks{display:flex; align-items:center; gap:36px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative; min-height:100vh;
+    display:flex; align-items:center;
+    background:linear-gradient(180deg, rgba(28,19,13,0.55), rgba(28,19,13,0.86)),
+      url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop') center/cover;
+    color:var(--milk); padding-top:60px;
+  }
+  .hero-inner{
+    max-width:1180px; margin:0 auto; padding:0 32px; width:100%;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(48px, 6.4vw, 92px); line-height:0.98; font-weight:500;
+  }
+  .hero h1 em{font-style:italic; font-weight:400; color:var(--brass);}
+  .hero p.lede{
+    font-size:18px; max-width:440px; margin-top:26px; color:var(--parchment); opacity:0.88;
+    font-weight:300;
+  }
+  .hero-actions{display:flex; gap:18px; margin-top:38px; align-items:center;}
+  .btn-primary{
+    background:var(--clay); color:var(--milk); padding:15px 28px;
+    font-size:13px; letter-spacing:0.08em; text-transform:uppercase; font-weight:500;
+    border:1px solid var(--clay);
+  }
+  .btn-primary:hover{background:transparent; border-color:var(--milk);}
+  .btn-ghost{
+    font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:var(--milk);
+    border-bottom:1px solid var(--brass); padding-bottom:4px;
+  }
+
+  /* pour-over signature graphic */
+  .glass-wrap{display:flex; justify-content:center; position:relative;}
+  .stamp{
+    position:absolute; top:-18px; right:6px; width:96px; height:96px;
+    border:1px solid var(--brass); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.12em;
+    color:var(--brass); text-transform:uppercase; line-height:1.5;
+    transform:rotate(8deg);
+  }
+  svg.pourgraphic{width:220px; height:auto; filter:drop-shadow(0 30px 40px rgba(0,0,0,0.45));}
+  .layer{transform-origin:center bottom; animation:pourIn 1.6s cubic-bezier(.2,.8,.2,1) forwards; transform:scaleY(0);}
+  .layer.l1{animation-delay:.1s;}
+  .layer.l2{animation-delay:.55s;}
+  .layer.l3{animation-delay:1s;}
+  @keyframes pourIn{to{transform:scaleY(1);}}
+
+  /* ===== HERITAGE ===== */
+  .section{padding:110px 0;}
+  .heritage{display:grid; grid-template-columns:0.95fr 1.05fr; gap:80px; align-items:start;}
+  .heritage h2{font-size:clamp(34px,4vw,50px); margin:14px 0 26px; line-height:1.05;}
+  .heritage p{font-size:16.5px; color:var(--ink-soft); margin-bottom:18px; max-width:480px;}
+  .heritage strong{color:var(--ink); font-weight:600;}
+  .media-stack{position:relative;}
+  .media-stack img{border-radius:2px;}
+  .media-a{height:280px;}
+  .media-b{
+    height:200px; width:62%; position:relative; margin-top:-70px; margin-left:auto;
+    border:6px solid var(--parchment); box-shadow:0 24px 40px rgba(28,19,13,0.25);
+  }
+
+  /* ===== SIGNATURE DRINKS ===== */
+  .drinks{
+    background:
+      linear-gradient(180deg, rgba(28,19,13,0.88), rgba(28,19,13,0.93)),
+      url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop') center/cover fixed;
+    color:var(--milk);
+  }
+  .drinks .eyebrow{color:var(--brass);}
+  .drinks .eyebrow::before{background:var(--brass);}
+  .drinks h2{color:var(--milk); font-size:clamp(32px,4vw,46px); margin:14px 0 50px; max-width:600px;}
+  .drink-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);}
+  .drink-card{background:transparent; padding:42px 30px; position:relative;}
+  .drink-card .code{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--brass); letter-spacing:0.1em;}
+  .drink-card h3{font-size:26px; margin:16px 0 12px; font-weight:500; font-style:italic;}
+  .drink-card p{font-size:14.5px; color:rgba(251,246,236,0.7); line-height:1.6;}
+  .drink-card .layers-mini{display:flex; height:4px; margin-top:26px; width:60px;}
+  .drink-card .layers-mini span{flex:1;}
+
+  /* ===== ROASTERY TIMELINE ===== */
+  .roastery{background:var(--milk);}
+  .roastery-head{max-width:600px; margin-bottom:70px;}
+  .roastery-head h2{font-size:clamp(32px,4vw,46px); margin:14px 0 18px;}
+  .roastery-head p{color:var(--ink-soft); font-size:16px;}
+  .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative;}
+  .timeline::before{
+    content:''; position:absolute; top:9px; left:0; right:0; height:1px; background:var(--line-dark);
+  }
+  .tstep{padding-right:24px; position:relative;}
+  .tstep .dot{width:9px; height:9px; border-radius:50%; background:var(--clay); margin-bottom:24px; position:relative; z-index:2;}
+  .tstep .lot{font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--clay); letter-spacing:0.1em; margin-bottom:10px;}
+  .tstep h4{font-family:'Fraunces', serif; font-weight:500; font-size:19px; margin-bottom:10px;}
+  .tstep p{font-size:14px; color:var(--ink-soft);}
+
+  .roast-levels{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-dark); margin-top:90px; border-top:1px solid var(--line-dark);}
+  .roast-card{background:var(--milk); padding:0 0 34px; position:relative;}
+  .roast-card::before{content:'';display:block; height:5px; background:var(--rc);}
+  .rc-swatch{height:150px; margin-bottom:24px;}
+  .roast-card .code{font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--rc); letter-spacing:0.1em; padding:0 28px;}
+  .roast-card h4{font-family:'Fraunces', serif; font-weight:500; font-style:italic; font-size:21px; margin:12px 0 12px; padding:0 28px;}
+  .roast-card p{font-size:14px; color:var(--ink-soft); line-height:1.6; padding:0 28px;}
+
+  /* ===== MENU ===== */
+  .menu-section{
+    background:
+      linear-gradient(180deg, rgba(28,19,13,0.88), rgba(28,19,13,0.93)),
+      url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop') center/cover fixed;
+    color:var(--milk);
+  }
+  .menu-section .eyebrow{color:var(--brass);}
+  .menu-section .eyebrow::before{background:var(--brass);}
+  .menu-section h2{color:var(--milk); font-size:clamp(32px,4vw,46px); margin:14px 0 10px; max-width:640px;}
+  .menu-note{font-size:14.5px; color:rgba(251,246,236,0.6); margin-bottom:40px;}
+  .menu-tabs{display:flex; flex-wrap:wrap; gap:0; border-bottom:1px solid var(--line); margin-bottom:46px;}
+  .menu-tab{
+    background:none; border:none; color:rgba(251,246,236,0.55); font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; padding:14px 4px; margin-right:28px;
+    cursor:pointer; position:relative; top:1px; border-bottom:2px solid transparent;
+  }
+  .menu-tab.active{color:var(--milk); border-bottom-color:var(--brass);}
+  .menu-tab:hover{color:var(--milk);}
+  .menu-panel{display:none;}
+  .menu-panel.active{display:block;}
+  .menu-groups{display:grid; grid-template-columns:1fr 1fr; gap:0 60px;}
+  .menu-group{margin-bottom:38px;}
+  .menu-group h5{font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:19px; color:var(--brass); margin-bottom:16px;}
+  .menu-item{display:flex; justify-content:space-between; align-items:baseline; gap:14px; padding:9px 0; border-bottom:1px dotted var(--line);}
+  .menu-item .mi-name{font-size:14.5px;}
+  .menu-item .mi-name small{display:block; font-size:11.5px; color:rgba(251,246,236,0.5); font-weight:400; margin-top:2px; line-height:1.4;}
+  .menu-item .mi-price{font-family:'IBM Plex Mono', monospace; font-size:13px; white-space:nowrap; color:var(--brass);}
+  .menu-full-width{grid-column:1 / -1;}
+  .offer-row{display:flex; justify-content:space-between; align-items:baseline; padding:16px 0; border-bottom:1px solid var(--line);}
+  .offer-row .of-day{font-family:'Fraunces', serif; font-style:italic; font-size:18px;}
+  .offer-row .of-detail{font-size:13px; color:rgba(251,246,236,0.6);}
+  .offer-row .of-price{font-family:'IBM Plex Mono', monospace; color:var(--brass); font-size:15px;}
+
+  /* ===== LOCATIONS ===== */
+  .locations{
+    background:
+      linear-gradient(180deg, rgba(28,19,13,0.88), rgba(28,19,13,0.93)),
+      url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop') center/cover fixed;
+    color:var(--milk); padding:110px 0;
+  }
+  .locations .eyebrow{color:var(--brass); justify-content:flex-start;}
+  .locations .eyebrow::before{background:var(--brass);}
+  .locations h2{font-size:clamp(30px,3.6vw,42px); color:var(--milk); margin:14px 0 44px; max-width:600px;}
+  .loc-tabs{display:flex; gap:10px; border-bottom:1px solid var(--line); margin-bottom:44px;}
+  .loc-tab{
+    background:none; border:none; color:rgba(251,246,236,0.55); font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; padding:14px 4px; margin-right:30px;
+    cursor:pointer; position:relative; top:1px; border-bottom:2px solid transparent;
+  }
+  .loc-tab.active{color:var(--milk); border-bottom-color:var(--brass);}
+  .loc-tab:hover{color:var(--milk);}
+  .loc-panel{display:none; grid-template-columns:1fr 1fr; gap:50px; align-items:stretch;}
+  .loc-panel.active{display:grid;}
+  .loc-media{height:340px; border-radius:2px; overflow:hidden;}
+  .loc-info{display:flex; flex-direction:column; justify-content:center;}
+  .loc-info .code{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--brass); letter-spacing:0.1em; margin-bottom:14px;}
+  .loc-info h3{font-family:'Fraunces', serif; font-style:italic; font-size:30px; font-weight:500; margin-bottom:10px;}
+  .loc-info .hours{font-size:14.5px; color:rgba(251,246,236,0.72); margin-bottom:24px;}
+  .map-frame{height:180px; border:1px solid var(--line); filter:grayscale(0.4) sepia(0.15) contrast(1.05);}
+  .map-frame iframe{width:100%; height:100%; border:0;}
+  .loc-info a.btn-ghost{width:fit-content; margin-top:22px;}
+
+  .country-panel{display:none;}
+  .country-panel.active{display:block;}
+  .eth-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px;}
+  .eth-item{
+    display:flex; flex-direction:column; gap:14px; background:var(--ink); padding:26px 24px;
+    color:var(--milk); text-decoration:none; position:relative; transition:background .2s ease;
+  }
+  .eth-item:hover{background:rgba(198,154,69,0.1);}
+  .eth-item .eth-code{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--brass); letter-spacing:0.1em;}
+  .eth-item .eth-name{font-family:'Fraunces',serif; font-size:17px; font-style:italic; line-height:1.3;}
+  .eth-item .eth-tag{display:block; font-family:'IBM Plex Mono',monospace; font-style:normal; font-size:10.5px; color:rgba(251,246,236,0.55); margin-top:5px; letter-spacing:0.03em;}
+  .eth-item .eth-go{
+    display:flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace; font-size:10.5px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--brass); margin-top:auto;
+  }
+  .eth-item .eth-go .arrow{transition:transform .2s ease;}
+  .eth-item:hover .eth-go .arrow{transform:translateX(4px);}
+  @media (max-width:900px){ .eth-grid{grid-template-columns:1fr 1fr;} }
+
+  /* ===== TESTIMONIAL ===== */
+  .testimonial{padding:120px 0; text-align:center;}
+  .testimonial .eyebrow{justify-content:center;}
+  .testimonial .eyebrow::before{display:none;}
+  .testimonial blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:400;
+    font-size:clamp(24px,3vw,34px); max-width:820px; margin:30px auto 26px; line-height:1.35;
+    color:var(--ink);
+  }
+  .testimonial cite{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.1em; color:var(--clay); font-style:normal;}
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:
+      linear-gradient(180deg, rgba(61,35,23,0.9), rgba(61,35,23,0.95)),
+      url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop') center/cover fixed;
+    color:var(--milk); padding:90px 0 30px;
+  }
+  .footer-top{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:60px; padding-bottom:70px; border-bottom:1px solid var(--line);}
+  footer .wordmark{margin-bottom:18px;}
+  footer .foot-lede{font-size:15px; color:rgba(251,246,236,0.72); max-width:320px;}
+  .foot-col h5{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--brass); margin-bottom:20px;}
+  .foot-col p, .foot-col a{display:block; font-size:14.5px; color:rgba(251,246,236,0.85); margin-bottom:10px;}
+  .subscribe{display:flex; margin-top:18px; border-bottom:1px solid var(--line); padding-bottom:10px; max-width:280px;}
+  .subscribe input{background:none; border:none; color:var(--milk); font-family:'Work Sans'; font-size:14px; flex:1; outline:none;}
+  .subscribe input::placeholder{color:rgba(251,246,236,0.4);}
+  .subscribe button{background:none; border:none; color:var(--brass); font-size:18px; cursor:pointer;}
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center; padding-top:26px;
+    font-size:12.5px; color:rgba(251,246,236,0.5);
+  }
+
+  @media (max-width:860px){
+    .navlinks nav ul{display:none;}
+    .hero-inner{grid-template-columns:1fr; text-align:left;}
+    .glass-wrap{margin-top:50px;}
+    .heritage{grid-template-columns:1fr; gap:40px;}
+    .drink-grid{grid-template-columns:1fr;}
+    .timeline{grid-template-columns:1fr; gap:36px;}
+    .timeline::before{display:none;}
+    .roast-levels{grid-template-columns:1fr; margin-top:50px;}
+    .menu-groups{grid-template-columns:1fr;}
+    .menu-tabs{margin-bottom:30px;}
+    .menu-tab{margin-right:18px; font-size:10.5px;}
+    .locations{grid-template-columns:1fr;}
+    .loc-panel{grid-template-columns:1fr;}
+    .loc-media{height:220px;}
+    .loc-tabs{margin-bottom:30px;}
+    .eth-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr; gap:40px;}
+    .foot-bottom{flex-direction:column; gap:10px; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="navrow">
+    <a href="#top" class="wordmark">Tomoca<small>Caffè · Since 1953</small></a>
+    <div class="navlinks">
+      <nav><ul>
+        <li><a href="#heritage">Heritage</a></li>
+        <li><a href="#drinks">Signature</a></li>
+        <li><a href="#roastery">Roastery</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#menu">Menu</a></li>
+      </ul></nav>
+      <a href="#" class="nav-cta">Shop Beans</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Addis Ababa, 1953 — Present</div>
+      <h1>Where coffee<br><em>began</em>.</h1>
+      <p class="lede">Ethiopia is the birthplace of the coffee plant itself. Tomoca has roasted its highland arabica in the same Piazza storefront since 1953 — the first roastery in the country to bring that origin to a cup.</p>
+      <div class="hero-actions">
+        <a href="#drinks" class="btn-primary">Explore the Coffee</a>
+        <a href="#locations" class="btn-ghost">Find a Caffè</a>
+      </div>
+    </div>
+    <div class="glass-wrap">
+      <div class="stamp">Est.<br>1953<br>Addis Ababa</div>
+      <svg class="pourgraphic" viewBox="0 0 220 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- pour-over dripper with falling bloom -->
+        <path d="M55 70 L165 70 L145 190 Q110 210 75 190 L55 70 Z" stroke="#C69A45" stroke-width="2" fill="none"/>
+        <path d="M40 62 L180 62" stroke="#C69A45" stroke-width="2"/>
+        <path d="M95 190 L110 260 L125 190" stroke="#C69A45" stroke-width="2" fill="none"/>
+        <rect class="layer l1" x="70" y="215" width="80" height="4" fill="#A64B2A"/>
+        <circle class="layer l2" cx="110" cy="228" r="26" fill="none" stroke="#A64B2A" stroke-width="2"/>
+        <g class="layer l3">
+          <circle cx="86" cy="94" r="7" fill="#3D2317"/>
+          <circle cx="108" cy="86" r="7" fill="#3D2317"/>
+          <circle cx="130" cy="96" r="7" fill="#3D2317"/>
+          <circle cx="97" cy="106" r="7" fill="#7E3A20"/>
+          <circle cx="120" cy="108" r="7" fill="#7E3A20"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="pour-rule"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+
+<section class="section" id="heritage">
+  <div class="wrap heritage">
+    <div>
+      <div class="eyebrow">The Origin</div>
+      <h2>Every coffee plant on earth traces back here.</h2>
+      <p>The arabica plant was discovered growing wild in Ethiopia's highlands, and coffee has anchored daily life here ever since — the <em>buna</em> ceremony still gathers families around roasting beans and slow conversation, a ritual built on unison and respect.</p>
+      <p><strong>Tomoca</strong> was built to honor that origin: single-origin Ethiopian beans, roasted in-house since 1953, and served everywhere from the standing-room espresso bar to the bag you take home.</p>
+      <a href="#drinks" class="btn-ghost">Explore the coffee</a>
+    </div>
+    <div class="media-stack">
+      <div class="media-a"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop" alt="Tomoca counter, Piazza Addis Ababa"></div>
+      <div class="media-b"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop" alt="Coffee ceremony gathering"></div>
+    </div>
+  </div>
+</section>
+
+<section class="drinks" id="drinks">
+  <div class="wrap">
+    <div class="eyebrow">The Coffee</div>
+    <h2>One roastery, four ways to drink it.</h2>
+    <div class="drink-grid">
+      <div class="drink-card">
+        <div class="code">ORIGIN — YIRGACHEFFE</div>
+        <h3>Single-Origin</h3>
+        <p>Beans from a single Ethiopian highland lot, roasted light to let the origin's own florals and citrus come through.</p>
+        <div class="layers-mini"><span style="background:#A64B2A"></span><span style="background:#C69A45"></span><span style="background:#F4ECDD"></span></div>
+      </div>
+      <div class="drink-card">
+        <div class="code">BREWED — FILTER</div>
+        <h3>Pour Over</h3>
+        <p>Slow, hand-poured, and unhurried — the way the roastery tastes its own beans before anything else leaves the bar.</p>
+        <div class="layers-mini"><span style="background:#7E3A20"></span><span style="background:#A64B2A"></span><span style="background:#C69A45"></span></div>
+      </div>
+      <div class="drink-card">
+        <div class="code">ROASTED — DARK</div>
+        <h3>Espresso</h3>
+        <p>Pulled straight, no milk, no dilution — the clearest read on how the beans were roasted that week.</p>
+        <div class="layers-mini"><span style="background:#3D2317"></span><span style="background:#7E3A20"></span><span style="background:#A64B2A"></span></div>
+      </div>
+      <div class="drink-card">
+        <div class="code">TAKE HOME — WHOLE BEAN</div>
+        <h3>Roasted Beans</h3>
+        <p>The same roast the bar pulls from, bagged fresh for the counter — grind it, brew it, or pour it your own way at home.</p>
+        <div class="layers-mini"><span style="background:#1C130D"></span><span style="background:#3D2317"></span><span style="background:#7E3A20"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section roastery" id="roastery">
+  <div class="wrap">
+    <div class="roastery-head">
+      <div class="eyebrow">The Roastery</div>
+      <h2>66+ years of roasting Ethiopian highland beans.</h2>
+      <p>Roasting is a craft that takes training, patience, and time to trust. Tomoca's roasters have worked the same process since 1953 — and the Ethiopian highlands do the rest: rich soil, favorable climate, and a rare low-acidity, full-bodied bean most origins can't match.</p>
+    </div>
+    <div class="timeline">
+      <div class="tstep">
+        <div class="dot"></div>
+        <div class="lot">LOT 01</div>
+        <h4>Sourced</h4>
+        <p>Beans selected direct from Ethiopian growing regions, chosen lot by lot.</p>
+      </div>
+      <div class="tstep">
+        <div class="dot"></div>
+        <div class="lot">LOT 02</div>
+        <h4>Roasted</h4>
+        <p>Small batches, roasted fresh on the same process trusted since 1953.</p>
+      </div>
+      <div class="tstep">
+        <div class="dot"></div>
+        <div class="lot">LOT 03</div>
+        <h4>Poured</h4>
+        <p>Pulled to order across the bar, or hand-poured for those who wait for it.</p>
+      </div>
+      <div class="tstep">
+        <div class="dot"></div>
+        <div class="lot">LOT 04</div>
+        <h4>Bagged</h4>
+        <p>Take the roast home — the same beans, fresh off the counter.</p>
+      </div>
+    </div>
+
+    <div class="roast-levels">
+      <div class="roast-card" style="--rc:#D9A441;">
+        <div class="rc-swatch"><img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=600&auto=format&fit=crop" alt="Light roast beans"></div>
+        <div class="code">130°C – LIGHT</div>
+        <h4>Light Roast</h4>
+        <p>Pulled before any oil reaches the surface, right as the bean fully develops. Our predetermined roast time builds caramelization and body while naturally offsetting acidity.</p>
+      </div>
+      <div class="roast-card" style="--rc:#A64B2A;">
+        <div class="rc-swatch"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600&auto=format&fit=crop" alt="Medium roast beans"></div>
+        <div class="code">160°C – MEDIUM</div>
+        <h4>Medium Roast</h4>
+        <p>Full caramelization, subdued acidity, and a light oil sheen on the bean. A deep cup flavor without the sharper edges of a dark roast.</p>
+      </div>
+      <div class="roast-card" style="--rc:#2A160D;">
+        <div class="rc-swatch"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=600&auto=format&fit=crop" alt="Dark roast beans"></div>
+        <div class="code">185°C – DARK (BAR)</div>
+        <h4>Dark Roast · Bar</h4>
+        <p>Fully covered in oil, edging toward carbonization. Rich flavor and heavy body dominate as the acidity all but disappears — the roast behind the bar's espresso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="wrap">
+    <div class="eyebrow">What They Say</div>
+    <blockquote>"You can taste the difference when the beans never leave the country they were grown in. Tomoca's roast is the closest thing to drinking coffee at the source — everything else tastes like a copy after that."</blockquote>
+    <cite>— Doreen Wainaina</cite>
+  </div>
+</section>
+
+<section class="locations" id="locations">
+  <div class="wrap">
+    <div class="eyebrow">Find a Caffè</div>
+    <h2>From the original Piazza storefront to two counters in Nairobi.</h2>
+
+    <div class="loc-tabs">
+      <button class="loc-tab active" data-country="ethiopia">Ethiopia</button>
+      <button class="loc-tab" data-country="kenya">Kenya</button>
+    </div>
+
+    <div class="country-panel active" id="country-ethiopia">
+      <p class="menu-note" style="margin-bottom:24px;">Fourteen branches across Addis Ababa, roasting from the original 1953 storefront.</p>
+      <div class="eth-grid">
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Wawel+Street+Piazza+Addis+Ababa" target="_blank"><span class="eth-code">01 · FLAGSHIP</span><span class="eth-name">Original Piazza<span class="eth-tag">Wawel Street</span></span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Atlas+Medhane+Alem+Building+Addis+Ababa" target="_blank"><span class="eth-code">02</span><span class="eth-name">Atlas Branch<span class="eth-tag">Medhane Alem Building</span></span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Sefer+Addis+Ababa" target="_blank"><span class="eth-code">03</span><span class="eth-name">Sefer Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Meskel+Flower+Addis+Ababa" target="_blank"><span class="eth-code">04</span><span class="eth-name">Meskel Flower Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Abrehot+Library+Addis+Ababa" target="_blank"><span class="eth-code">05</span><span class="eth-name">Abrehot Library Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Africa+Union+Addis+Ababa" target="_blank"><span class="eth-code">06</span><span class="eth-name">Africa Union Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Bankers+Club+Hibir+Tower+Addis+Ababa" target="_blank"><span class="eth-code">07</span><span class="eth-name">Bankers Club<span class="eth-tag">Hibir Tower</span></span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Retro+Legend+Addis+Ababa" target="_blank"><span class="eth-code">08</span><span class="eth-name">Retro Legend Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Wood+Addis+Ababa" target="_blank"><span class="eth-code">09</span><span class="eth-name">Wood Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+EEU+Addis+Ababa" target="_blank"><span class="eth-code">10</span><span class="eth-name">EEU Branch</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Industrial+Jackros+Addis+Ababa" target="_blank"><span class="eth-code">11</span><span class="eth-name">Industrial<span class="eth-tag">Jackros</span></span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Atlas+Cape+Verde+Street+Addis+Ababa" target="_blank"><span class="eth-code">12</span><span class="eth-name">Atlas Cape Verde St<span class="eth-tag">Sip and Create</span></span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Cafe+Business+District+Addis+Ababa" target="_blank"><span class="eth-code">13</span><span class="eth-name">Business District</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+        <a class="eth-item" href="https://www.google.com/maps/search/?api=1&query=Tomoca+Coffee+Airport+Road+Addis+Ababa" target="_blank"><span class="eth-code">14</span><span class="eth-name">Airport Road</span><span class="eth-go">Directions <span class="arrow">→</span></span></a>
+      </div>
+    </div>
+
+    <div class="country-panel" id="country-kenya">
+      <div class="loc-tabs" style="margin-bottom:36px;">
+        <button class="loc-tab active" data-loc="tworivers">Two Rivers</button>
+        <button class="loc-tab" data-loc="broadwalk">Broadwalk Mall</button>
+      </div>
+
+      <div class="loc-panel active" id="loc-tworivers">
+        <div class="loc-media"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200&auto=format&fit=crop" alt="Tomoca, Two Rivers"></div>
+        <div class="loc-info">
+          <div class="code">TWO RIVERS · NAIROBI</div>
+          <h3>Two Rivers Mall</h3>
+          <p class="hours">Mon – Sun · 7:00 AM – 8:00 PM</p>
+          <p class="hours">+254 706 565 781 / +254 110 097 919<br>info@tomocacoffeeafrica.com</p>
+          <div class="map-frame"><iframe src="https://www.google.com/maps?q=Two+Rivers+Mall+Nairobi&z=15&output=embed" loading="lazy" title="Map — Tomoca Two Rivers"></iframe></div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Two+Rivers+Mall+Nairobi" target="_blank" class="btn-ghost">Get directions</a>
+        </div>
+      </div>
+
+      <div class="loc-panel" id="loc-broadwalk">
+        <div class="loc-media"><img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=1200&auto=format&fit=crop" alt="Tomoca, Broadwalk Mall"></div>
+        <div class="loc-info">
+          <div class="code">BROADWALK MALL · NAIROBI</div>
+          <h3>Broadwalk Mall</h3>
+          <p class="hours">Mon – Sun · 7:00 AM – 9:00 PM</p>
+          <p class="hours">+254 703 783 209 / +254 110 097 919<br>info@tomocacoffeeafrica.com</p>
+          <div class="map-frame"><iframe src="https://www.google.com/maps?q=Broadwalk+Mall+Nairobi&z=15&output=embed" loading="lazy" title="Map — Tomoca Broadwalk"></iframe></div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Broadwalk+Mall+Nairobi" target="_blank" class="btn-ghost">Get directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section menu-section" id="menu">
+  <div class="wrap">
+    <div class="eyebrow">On The Menu</div>
+    <h2>Order from the counter, right from your phone.</h2>
+    <p class="menu-note" style="max-width:520px;">The full menu — coffee, food, bakery, and beans to go — same at Two Rivers and Broadwalk Mall. Browse, build an order, and show the bill at the till.</p>
+    <a href="tomoca-menu.html" class="btn-primary" style="display:inline-block; margin-top:8px;">Open the Caffè Menu →</a>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap footer-top">
+    <div>
+      <a href="#" class="wordmark">Tomoca<small>Caffè · Since 1953</small></a>
+      <p class="foot-lede">Ethiopia's first espresso bar. Roasted in Addis Ababa since 1953, poured layer by layer ever since.</p>
+      <div class="subscribe">
+        <input type="email" placeholder="Enter your email">
+        <button>→</button>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Visit</h5>
+      <p>+254 110 097 919</p>
+      <p>info@tomocacoffeeafrica.com</p>
+      <a href="#">Make a reservation</a>
+    </div>
+    <div class="foot-col">
+      <h5>Explore</h5>
+      <a href="#heritage">Heritage</a>
+      <a href="#drinks">Signature Pours</a>
+      <a href="#roastery">The Roastery</a>
+      <a href="#locations">Locations</a>
+      <a href="#menu">Menu</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© Tomoca Coffee Africa, 2026. All rights reserved.</span>
+    <span>Facebook · Instagram</span>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  document.querySelectorAll('[data-country]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('[data-country]').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.country-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('country-' + tab.dataset.country).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('[data-loc]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('[data-loc]').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.loc-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('loc-' + tab.dataset.loc).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('menu-' + tab.dataset.menu).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
